@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chasse aux QR Codes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Page d'accueil -->
+  <div class="container" id="inscription">
+    <h1>Chasse aux QR Codes</h1>
+    <p>Inscrivez-vous pour commencer la chasse !</p>
+    <input type="text" id="nom" placeholder="Nom" required>
+    <input type="text" id="prenom" placeholder="Prénom" required>
+    <input type="text" id="classe" placeholder="Classe" required>
+    <button onclick="commencerJeu()">Commencer le jeu</button>
+  </div>
+
+  <!-- Affichage du jeu -->
+  <div class="container" id="jeu" style="display:none;">
+    <h2>La chasse est lancée !</h2>
+    <video id="qr-video" autoplay></video>
+    <button onclick="startGame()">Scanner un QR Code</button>
+    <p id="score">Score: 0</p>
+  </div>
+
+  <!-- Tableau de classement -->
+  <div class="container">
+    <h2>Classement</h2>
+    <ul id="classement">
+      <!-- Liste des participants et leurs scores -->
+    </ul>
+  </div>
+
+  <script>
+    // Variable pour le score et les QR codes scannés
+    let currentScore = 0;
+    let scannedQRCodeIds = new Set(); // Set pour éviter les doublons
+
+    // Fonction pour commencer le jeu (enregistrer les informations de l'utilisateur)
+    function commencerJeu() {
+      const nom = document.getElementById("nom").value;
+      const prenom = document.getElementById("prenom").value;
+      const classe = document.getElementById("classe").value;
+
+      if (nom && prenom && classe) {
+        // Cacher le formulaire d'inscription et afficher le jeu
+        document.getElementById("inscription").style.display = "none";
+        document.getElementById("jeu").style.display = "block";
+
+        // Enregistrer l'utilisateur dans la base de données ou dans un objet (à implémenter)
+        console.log("Participant inscrit : " + nom + " " + prenom + " (" + classe + ")");
+
+        // Démarrer le jeu
+        startGame();
+      } else {
+        alert("Veuillez remplir tous les champs !");
+      }
+    }
+
+    // Fonction pour démarrer le scan des QR codes
+    function startGame() {
+      const video = document.getElementById("qr-video");
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
+
+      // Accéder à la caméra
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+        .then((stream) => {
+          video.srcObject = stream;
+          video.setAttribute("playsinline", true);
+          video.play();
+          requestAnimationFrame(scanQRCode);
+        })
+        .catch(err => {
+          console.log("Erreur d'accès à la caméra:", err);
+        });
+
+      function scanQRCode() {
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.height = video.videoHeight;
+          canvas.width = video.videoWidth;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, canvas.width, canvas.height);
+
+          if (code) {
+            const qrCodeId = code.data;
+            if (!scannedQRCodeIds.has(qrCodeId)) {
+              scannedQRCodeIds.add(qrCodeId);
+              currentScore += 10; // Ajouter 10 points pour chaque QR code unique
+              document.getElementById("score").innerText = "Score: " + currentScore;
+            }
+          }
+        }
+        requestAnimationFrame(scanQRCode);
+      }
+    }
+
+    // Afficher un tableau de classement (ici simulé)
+    const classement = [
+      { nom: 'John', prenom: 'Doe', score: 30 },
+      { nom: 'Jane', prenom: 'Smith', score: 40 },
+      { nom: 'Alex', prenom: 'Johnson', score: 25 }
+    ];
+
+    function afficherClassement(classement) {
+      const classementList = document.getElementById("classement");
+      classementList.innerHTML = "";
+      classement.forEach((participant) => {
+        const li = document.createElement("li");
+        li.textContent = `${participant.nom} ${participant.prenom}: ${participant.score} points`;
+        classementList.appendChild(li);
+      });
+    }
+
+    // Initialiser l'affichage du classement
+    afficherClassement(classement);
+  </script>
+
+  <!-- Inclure la bibliothèque jsQR -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+
+</body>
+</html>

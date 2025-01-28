@@ -1,0 +1,179 @@
+/* Variables de couleurs pour le thème MDL et Pâques */
+:root {
+    --couleur-principale: #FF9800; /* Orange MDL */
+    --couleur-secondaire: #4CAF50; /* Vert pour la fraîcheur de Pâques */
+    --couleur-fond: #F9F9F9; /* Fond clair pour un design épuré */
+    --couleur-texte: #333333; /* Texte foncé pour lisibilité */
+    --couleur-accent: #FFC107; /* Accent jaune pour Pâques */
+    --couleur-boutons: #8BC34A; /* Vert doux pour les boutons */
+}
+
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f0f0f0; }
+h1 { text-align: center; margin-top: 20px; }
+.container { max-width: 600px; margin: 20px auto; padding: 20px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+#qr-video { max-width: 100%; height: auto; border: 1px solid #ccc; margin-bottom: 20px; }
+input, button { padding: 10px; margin: 10px 0; width: 100%; box-sizing: border-box; }
+button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+button:hover { background-color: #45a049; }
+#score { font-size: 20px; font-weight: bold; }
+#classement { list-style-type: none; padding: 0; }
+#classement li { padding: 8px; border-bottom: 1px solid #ccc; }
+#classement li:last-child { border-bottom: none; }
+
+/* Corps de la page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--couleur-fond);
+    color: var(--couleur-texte);
+    margin: 0;
+    padding: 0;
+}
+
+/* En-tête (header) */
+header {
+    background-color: var(--couleur-principale);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    margin: 0;
+}
+
+/* Page d’accueil */
+.section-accueil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--couleur-secondaire);
+    margin-bottom: 20px;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+p {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* Formulaire d’inscription */
+.formulaire {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input[type="text"], input[type="email"] {
+    background-color: #fafafa;
+}
+
+button {
+    background-color: var(--couleur-boutons);
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--couleur-accent);
+}
+
+/* Tableau de classement */
+.tableau-classement {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tableau-classement th, .tableau-classement td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tableau-classement th {
+    background-color: var(--couleur-principale);
+    color: white;
+}
+
+.tableau-classement tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.tableau-classement tr:hover {
+    background-color: var(--couleur-accent);
+    color: white;
+}
+
+/* Interface administrateur */
+.interface-admin {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.interface-admin h3 {
+    font-size: 1.8rem;
+    color: var(--couleur-principale);
+}
+
+.interface-admin button {
+    background-color: var(--couleur-principale);
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.interface-admin button:hover {
+    background-color: var(--couleur-accent);
+}
+
+/* Animation pour les éléments */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 2s ease-out;
+}
